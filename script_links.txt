@@ -1,0 +1,84 @@
+http://localhost:8080/ask/1737703065612 - temple
+http://localhost:8080/ask/1737713391079
+http://localhost:8080/ask/1737714195665
+
+http://localhost:8080/ask/1737949274300
+http://localhost:8080/ask/1737959291088
+http://localhost:8080/ask/1737968418356
+https://voiceassist.onrender.com/ask/1737968959305
+https://voiceoverpoj-1.onrender.com/ask/1739341110932
+Script ID: 1739772210324, File Name: temple.xlsx, URL:  http://localhost:8080:/ask/1739772210324
+Script ID: 1739772266076, File Name: temple.xlsx, URL:  http://localhost:8080:/ask/1739772266076
+http://localhost:8080/ask/eef595e67372de48d678c24acfe7424b (File: 1739791238943-temple.xlsx)
+http://localhost:8080/ask/7e426824521b5d3dab9ba4c829fa6522 (File: 1739792507194-temple.xlsx)
+http://localhost:8080/ask/a19036b80f0aeb3a8921fc9df383a917 (File: 1739792685778-temple.xlsx)
+http://localhost:8080/ask/9cef65723ffe8fd616ad8d85a8bb4436 (File: 1739793091821-temple.xlsx)
+http://localhost:8080/ask/88aca697c184988ecf7785be956f8aa7 (File: 1739793211963-temple.xlsx)
+http://localhost:8080/ask/39ddf790d83074e7ecab320f41d1b9c3 (File: 1739794455242-temple.xlsx)
+http://localhost:8080/ask/669e1702644735cb842ecc4539770f6d (File: 1739794596786-temple.xlsx)
+http://localhost:8080/ask/c5ea6a221a41805f86c0ae1902d3c3fe (File: 1739807417315-temple.xlsx)
+http://localhost:8080:/ask/1739850661291
+Script ID: 1739851514926, File Name: temple.xlsx, URL: http://localhost:8080/ask/1739851514926
+Script ID: 1739853285112, File Name: temple.xlsx, URL: http://localhost:8080/ask/1739853285112
+Script ID: 1739858204463, File Name: excel.xlsx, URL: http://localhost:8080/ask/1739858204463
+Script ID: 1739858204463, File Name: excel.xlsx, URL: http://localhost:8080/ask/1739858204463
+Script ID: 1739858204463, File Name: excel.xlsx, URL: http://localhost:8080/ask/1739858204463
+Script ID: 1739858204463, File Name: excel.xlsx, URL: http://localhost:8080/ask/1739858204463
+Script ID: 1739858204463, File Name: excel.xlsx, URL: http://localhost:8080/ask/1739858204463
+Script ID: 1739858204463, File Name: excel.xlsx, URL: http://localhost:8080/ask/1739858204463
+Script ID: 1739862955021, File Name: General_Questions_and_Answers.xlsx, URL: http://localhost:8080/ask/1739862955021
+Script ID: 1739862955021, File Name: General_Questions_and_Answers.xlsx, URL: http://localhost:8080/ask/1739862955021
+Client: ashok, Script ID: 1739862955021, File Name: General_Questions_and_Answers.xlsx, URL: http://localhost:8080/ask/1739862955021
+
+Client: ndas, Script ID: 1740033001153, File Name: Sweets_Customer_Inquiries.xlsx, URL: http://localhost:8080/ask/1740033001153
+Client: gani, Script ID: 1740381216460, File Name: questions.xlsx, URL: http://localhost:8080/ask/1740381216460
+Client: qna, Script ID: 1740381216460, File Name: questions.xlsx, URL: http://localhost:8080/ask/1740381216460
+Client: qna, Script ID: 1740381216460, File Name: questions.xlsx, URL: http://localhost:8080/ask/1740381216460
+Client: qna, Script ID: 1740381216460, File Name: questions.xlsx, URL: http://localhost:8080/ask/1740381216460
+Client: company, Script ID: 1740381216460, File Name: questions.xlsx, URL: http://localhost:8080/ask/1740381216460
+Client: lakshmi, Script ID: 1740033001153, File Name: Sweets_Customer_Inquiries.xlsx, URL: http://localhost:8080/ask/1740033001153
+Client: qna, Script ID: 1740381216460, File Name: questions.xlsx, URL: http://localhost:8080/ask/1740381216460
+Client: BAtalks, Script ID: 1740975945805, File: companyy.xlsx, URL: http://localhost:8080/ask/1740975945805
+Client: clinte, Script ID: 1740977680771, File: companyy.xlsx, URL: http://localhost:8080/ask/1740977680771
+Client: BAtalkss, Script ID: 1740995253939, File: companyy.xlsx, URL: http://localhost:8080/ask/1740995253939
+Client: hi, Script ID: 1740995591987, File: companyy.xlsx, URL: http://localhost:8080/ask/1740995591987
+Client: hello, Script ID: 1740999351966, File: companyy.xlsx, URL: http://65.1.176.171:8080/ask/1740999351966
+Client: temple, Script ID: 1741253165499, File: temple.xlsx, URL:  http://localhost:8080/ask/1741253165499
+Client: harshi, Script ID: 1741254025622, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741254025622
+Client: hlooo, Script ID: 1741322831952, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741322831952
+Client: harshini, Script ID: 1741678161217, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741678161217
+Client: BAtalkssss, Script ID: 1741680155499, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741680155499
+Client: companyyy, Script ID: 1741682024265, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741682024265
+Client: ufhuif, Script ID: 1741682276792, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741682276792
+Client: sfsgfrg, Script ID: 1741685219839, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741685219839
+Client: ethrhytg, Script ID: 1741685390032, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741685390032
+Client: tgthrs, Script ID: 1741685994635, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741685994635
+Client: effsgtr, Script ID: 1741687286335, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741687286335
+Client: rgrswgsr, Script ID: 1741687989508, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741687989508
+Client: wegrwh, Script ID: 1741688231989, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741688231989
+Client: ryhyhtfdef, Script ID: 1741688359578, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741688359578
+Client: gtedgd, Script ID: 1741689301804, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741689301804
+Client: ewfgte7rtf, Script ID: 1741690313389, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741690313389
+Client: rgtrwt, Script ID: 1741690618635, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741690618635
+Client: dsfd, Script ID: 1741691256637, File: companyy.xlsx, URL:  http://localhost:8080/ask/1741691256637
+Client: kgfxfygupo, Script ID: 1741933641141, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741933641141
+Client: rtyui, Script ID: 1741933782725, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741933782725
+Client: tyrdyqtwe, Script ID: 1741933943328, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741933943328
+Client: tyui, Script ID: 1741934046815, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741934046815
+Client: trut, Script ID: 1741934143962, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741934143962
+Client: yegfte, Script ID: 1741934228178, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741934228178
+Client: yfgudsyf, Script ID: 1741934334507, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741934334507
+Client: rtyu, Script ID: 1741934549269, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741934549269
+Client: jhrpe, Script ID: 1741934692493, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741934692493
+Client: utkjgk, Script ID: 1741934795228, File: questions.xlsx, URL:  http://65.1.176.171:8080/ask/1741934795228
+Client: ijhyugtg, Script ID: 1741935178826, File: companyy.xlsx, URL:  http://65.1.176.171:8080/ask/1741935178826
+Client: ashok, Script ID: 1742186536644, File: questions (1).xlsx, URL:  http://65.1.176.171:8080/ask/1742186536644
+Client: pandu, Script ID: 1742189612753, File: fabric.xlsx, URL:  http://65.1.176.171:8080/ask/1742189612753
+Client: saxc, Script ID: 1742203649734, File: Royal_Enfield_QnA.xlsx, URL:  http://65.1.176.171:8080/ask/1742203649734
+Client: asdgvfv, Script ID: 1742270052359, File: Sweets_Customer_Inquiries.xlsx, URL:  http://65.1.176.171:8080/ask/1742270052359
+Client: aa, Script ID: 1742289425929, File: Sweets_Customer_Inquiries.xlsx, URL:  http://65.1.176.171:8080/ask/1742289425929
+Client: hai, Script ID: 1742369009537, File: company.xlsx, URL:  http://65.1.176.171:8080/ask/1742369009537
+Client: nithin, Script ID: 1742369051146, File: temple.xlsx, URL:  http://65.1.176.171:8080/ask/1742369051146
+Client: hello, Script ID: 1742961687370, File: questions (1).xlsx, URL: /ask/1742961687370
+Client: ashok, Script ID: 1742970240687, File: questions.xlsx, URL: /ask/1742970240687
+Client: tarun, Script ID: 1742971047856, File: Test (1) (1).xlsx, URL: /ask/1742971047856

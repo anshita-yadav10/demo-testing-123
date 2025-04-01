@@ -1,0 +1,43 @@
+{
+  "excel.xlsx": {
+    "scriptId": "1739858204463",
+    "redirectUrl": "/ask/1739858204463"
+  },
+  "fabric.xlsx": {
+    "scriptId": "1742189612753",
+    "redirectUrl": "/ask/1742189612753",
+    "clientName": "pandu"
+  },
+  "questions.xlsx": {
+    "scriptId": "1742970240687",
+    "clientName": "ashok"
+  },
+  "questions (1).xlsx": {
+    "scriptId": "1742961687370",
+    "clientName": "hello"
+  },
+  "Royal_Enfield_QnA.xlsx": {
+    "scriptId": "1742203649734",
+    "redirectUrl": "/ask/1742203649734",
+    "clientName": "saxc"
+  },
+  "Sweets_Customer_Inquiries.xlsx": {
+    "scriptId": "1742289425929",
+    "redirectUrl": "/ask/1742289425929",
+    "clientName": "aa"
+  },
+  "company.xlsx": {
+    "scriptId": "1742369009537",
+    "redirectUrl": "/ask/1742369009537",
+    "clientName": "hai"
+  },
+  "temple.xlsx": {
+    "scriptId": "1742369051146",
+    "redirectUrl": "/ask/1742369051146",
+    "clientName": "nithin"
+  },
+  "Test (1) (1).xlsx": {
+    "scriptId": "1742971047856",
+    "clientName": "tarun"
+  }
+}
