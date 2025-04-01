@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raise a Ticket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        /* Sidebar aligned to the left */
+.sidebar {
+    width: 220px;
+    background: #2c3e50;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar h2 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #34495e;
+}
+
+.sidebar ul li:hover, .sidebar ul li.active {
+    background: #1a252f;
+}
+        .container {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        input, textarea, button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .close {
+            color: red;
+            float: right;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+   .logout-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 34px; /* Reduce icon size */
+  color: black;
+  cursor: pointer;
+  padding: 4px; /* Adjust padding */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-btn i {
+  font-size: 18px;
+}
+
+.logout-btn:hover {
+  color: #f44336;
+}
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    
+    <div class="sidebar">
+        <h2>Client Panel</h2>
+        <ul>
+            <li class="active" onclick="window.location.href='/client-profile'">Dashboard</li>
+            <li onclick="window.location.href='/payment-methods'">Payment Methods</li>
+            <li onclick="window.location.href='/url'">URLs</li>
+            <li onclick="window.location.href='/client-profile'">Profiles</li>
+            <li onclick="window.location.href='/send-mail'">mail</li>
+
+
+        </ul>
+    </div>
+
+    <div class="container">
+        <h2>Raise a Ticket</h2>
+        <label>Client Name:</label>
+        <input type="text" id="clientName" readonly>
+        <label>Mail ID:</label>
+        <input type="email" id="clientEmail" required>
+        <label>Phone Number:</label>
+        <input type="text" id="clientPhone" required>
+        <label>Issue/Problem:</label>
+        <textarea id="issue" required></textarea>
+        <button onclick="sendMail()">Submit</button>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <p id="popupMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        function generateTicketNumber() {
+            return 'TKT' + Math.floor(100000 + Math.random() * 900000);
+        }
+
+        function fetchUserDetails() {
+            fetch("/api/client-profile")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("clientName").value = data.client.username;
+                        document.getElementById("clientEmail").value = data.client.email;
+                    }
+                })
+                .catch(error => console.error("Error fetching user details:", error));
+        }
+
+        function sendMail() {
+            let clientName = document.getElementById('clientName').value;
+            let clientEmail = document.getElementById('clientEmail').value;
+            let clientPhone = document.getElementById('clientPhone').value;
+            let issue = document.getElementById('issue').value;
+            let ticketNumber = generateTicketNumber();
+
+            if (!clientEmail || !clientPhone || !issue) {
+                showPopup("Please fill all fields.");
+                return;
+            }
+
+            fetch('/send-mail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ticketNumber: ticketNumber,
+                    clientName: clientName,
+                    clientEmail: clientEmail,
+                    clientPhone: clientPhone,
+                    issue: issue
+                })
+            }).then(response => response.json())
+              .then(data => {
+                  showPopup(data.message);
+                  console.log("Success:", data);
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  showPopup("Error submitting ticket.");
+              });
+        }
+
+        function showPopup(message) {
+            document.getElementById("popupMessage").innerText = message;
+            document.getElementById("popupModal").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popupModal").style.display = "none";
+        }
+
+        window.onload = fetchUserDetails;
+
+        function logout() {
+        fetch('/logout')
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/';
+            }
+        });
+    }
+
+    </script>
+</body>
+</html>

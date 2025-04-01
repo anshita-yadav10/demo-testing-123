@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Profile</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* Base Styles */
+    body, html {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden; /* Prevent entire page scroll */
+      background-color: #f4f4f4;
+    }
+
+    /* Fixed Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('your-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      z-index: -1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #333;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      overflow-y: auto;
+      padding-top: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center; 
+      margin: 0 20px 20px 20px;
+      font-size: 24px;
+      color: white;
+      font-weight: bold;
+      padding-bottom: 10px; 
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #444;
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    .sidebar ul li.active {
+      background: #808080; /* Grey Highlight */
+      color: white;
+    }
+
+    .sidebar ul li:hover {
+      background: #555;
+    }
+
+    /* Form Container - Centered with Hidden Scrollbar */
+    .container {
+      width: 500px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      max-height: 80vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      margin: 50px auto;
+      position: relative;
+      animation: popIn 0.5s ease-out forwards;
+      
+      /* Hide Scrollbar */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    .container::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
+
+    /* Animation */
+    @keyframes popIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Form Centering */
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .form-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .form-buttons button {
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      margin: 5px;
+      color: white;
+    }
+    
+   .logout-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 34px; /* Reduce icon size */
+  color: black;
+  cursor: pointer;
+  padding: 4px; /* Adjust padding */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-btn i {
+  font-size: 18px;
+}
+
+.logout-btn:hover {
+  color: #f44336;
+}
+
+    .save-btn { background-color: #28a745; }
+    .reset-btn { background-color: #dc3545; }
+    .back-btn { background-color: #007bff; }
+  </style>
+</head>
+
+<body>
+  <button class="logout-btn" onclick="logout()">
+    <i class="fas fa-sign-out-alt"></i>
+  </button>
+
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li onclick="window.location.href='/admin'">Dashboard</li>
+            <li onclick="window.location.href='/main'">File Upload</li>
+            <li onclick="window.location.href='/client-Details'">Client Details</li>
+            <li onclick="window.location.href='/main'">Payment Details</li>
+            <li onclick="window.location.href='/Script'">Upload Scripts</li>
+            <li onclick="window.location.href='/communication'">Communication</li>
+            <li onclick="window.location.href='/profile'">Add User</li>
+            <li onclick="window.location.href='/admin-profile'">Profile</li>
+            <li onclick="window.location.href='/tickets-raised'">TicketsRaised</li>
+
+        </ul>
+    </div>
+      <div class="container" id="formContainer">
+    <h2>Client Profile Form</h2>
+
+    <form id="clientForm">
+      <div class="form-group">
+        <label for="username">Create Username:</label>
+        <input type="text" id="username" name="username" required />
+      </div>
+
+      <div class="form-group">
+        <label for="clientName">Client Name:</label>
+        <input type="text" id="clientName" name="clientName" required />
+      </div>
+
+      <div class="form-group">
+        <label for="personName">Person Name:</label>
+        <input type="text" id="personName" name="personName" required />
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email ID:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="businessNature">Nature of Business:</label>
+        <input type="text" id="businessNature" name="businessNature" required />
+      </div>
+
+      <div class="form-group">
+        <label for="yearsInBusiness">No. of Years in Business:</label>
+        <input type="number" id="yearsInBusiness" name="yearsInBusiness" min="0" required />
+      </div>
+
+      <div class="form-group">
+        <label for="subscription">Subscription Type:</label>
+        <select id="subscription" name="subscription" required>
+          <option value="Monthly">Monthly</option>
+          <option value="Quarterly">Quarterly</option>
+          <option value="Annually">Annually</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="subscriptionDate">Date of Subscription:</label>
+        <input type="date" id="subscriptionDate" name="subscriptionDate" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Create Password:</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required />
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="save-btn">Save</button>
+        <button type="reset" class="reset-btn">Reset</button>
+      </div>
+
+         </form>
+  </div>
+
+  <script>
+    // Form Validation
+    document.getElementById("clientForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch("http://localhost:80/api/clients", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("Client data saved successfully!");
+          document.getElementById("clientForm").reset();
+        } else {
+          alert(`Error: ${result.error}`);
+        }
+      } catch (error) {
+        alert("Error connecting to server!");
+      }
+    });
+    function logout() {
+        fetch('/logout')
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/';
+            }
+        });
+    }
+
+  </script>
+</body>
+
+</html>

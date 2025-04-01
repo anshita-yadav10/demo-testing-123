@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            background: linear-gradient(to bottom, rgb(6, 108, 100), rgb(14, 48, 122));
+            width: 800px;
+            height: 400px;
+            margin: 10% auto;
+            border-radius: 5px;
+        }
+
+        .content-holder {
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            font-weight: lighter;
+            letter-spacing: 2px;
+            margin-top: 15%;
+            padding: 50px;
+        }
+
+        .content-holder h2 {
+            font-size: 34px;
+            margin: 20px auto;
+        }
+
+        .content-holder button {
+            border: none;
+            font-size: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: white;
+            width: 150px;
+            margin: 20px auto;
+            cursor: pointer;
+        }
+
+        .box-2 {
+            background-color: white;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-form-container, .signup-form-container {
+            text-align: center;
+            display: none;
+        }
+
+        .login-form-container h1, .signup-form-container h1 {
+            color: black;
+            font-size: 24px;
+            padding: 20px;
+        }
+
+        .input-field {
+            font-size: 14px;
+            padding: 10px;
+            border-radius: 7px;
+            border: 1px solid rgb(168, 168, 168);
+            width: 250px;
+            outline: none;
+            margin-bottom: 15px;
+        }
+
+        .login-button, .signup-button {
+            color: white;
+            font-size: 14px;
+            padding: 13px;
+            border-radius: 7px;
+            border: none;
+            width: 250px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .login-button {
+            background-color: rgb(56, 102, 189);
+        }
+
+        .signup-button {
+            background-color: rgb(56, 189, 149);
+        }
+
+        .signup-form-container {
+            display: none;
+        }
+
+        .popup-alert {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+        }
+ 
+        .popup-button {
+            margin-top: 5px;
+            background-color: white;
+            color: red;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        .popup-button:hover {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box-1">
+            <div class="content-holder">
+                <h2>The Voice Assist</h2>
+                <button class="button-2" onclick="login()" style="display: none;">Login</button>
+            </div>
+        </div>
+    
+        <div class="box-2">
+            <div class="login-form-container" style="display: block;">
+                <h1>Login Form</h1>
+    
+                <!-- Pop-up message container -->
+                <div id="popup-alert" class="popup-alert" style="display: none;">
+                    <p id="popup-message">Please enter your credentials</p>
+                    <button class="popup-button" onclick="hidePopup()">OK</button>
+                </div>
+    
+                <input type="text" id="username" placeholder="Username" class="input-field">
+                <br>
+                <input type="password" id="password" placeholder="Password" class="input-field">
+                <br>
+                <button class="login-button" type="button" onclick="validateLogin()">Login</button>
+                <br>
+            </div>
+    
+        </div>
+    </div>
+    
+    <script>
+         function showPopupMessage(message) {
+            document.getElementById("popup-message").textContent = message;
+            document.getElementById("popup-alert").style.display = "block";
+        }
+    
+        function hidePopup() {
+            document.getElementById("popup-alert").style.display = "none";
+        }
+    
+        function validateLogin() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+    
+            fetch("/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.redirectTo;
+                } else {
+                    showPopupMessage("Invalid username or password!");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    
+        function showSignupForm() {
+            document.querySelector(".login-form-container").style.display = "none";
+            document.querySelector(".signup-form-container").style.display = "block";
+        }
+    
+        function showLoginForm() {
+            document.querySelector(".signup-form-container").style.display = "none";
+            document.querySelector(".login-form-container").style.display = "block";
+        }
+    
+            
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("unauthorized")) {
+                showPopupMessage("Please enter your credentials");
+            }
+        };
+    </script>
+    
+
+</body>
+</html>

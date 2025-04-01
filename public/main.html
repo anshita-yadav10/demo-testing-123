@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Voice Q&A</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+      width: 200px;
+      background: #333;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      overflow-y: auto;
+      padding-top: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #444;
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    /* Grey Highlight on click */
+    .sidebar ul li:hover {
+      background: #555;
+    }
+
+    .sidebar ul li.active {
+      background: grey;
+      color: white;
+    }
+
+    /* Main content area */
+    .content {
+      flex-grow: 1;
+      margin-left: 220px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    select, input[type="file"] {
+      width: 90%;
+      max-width: 300px;
+      padding: 10px;
+      margin: 10px auto;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 90%;
+      max-width: 300px;
+      padding: 10px;
+      margin: 10px auto;
+      display: block;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    label {
+      font-weight: bold;
+    }
+    
+   .logout-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 34px; /* Reduce icon size */
+  color: black;
+  cursor: pointer;
+  padding: 4px; /* Adjust padding */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-btn i {
+  font-size: 18px;
+}
+
+.logout-btn:hover {
+  color: #f44336;
+}
+  </style>
+</head>
+<body>
+  <button class="logout-btn" onclick="logout()">
+    <i class="fas fa-sign-out-alt"></i>
+  </button>
+  <!-- Sidebar Admin Panel -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+        <li onclick="window.location.href='/admin'">Dashboard</li>
+        <li onclick="window.location.href='/main'">File Upload</li>
+        <li onclick="window.location.href='/client-Details'">Client Details</li>
+        <li onclick="window.location.href='/main'">Payment Details</li>
+        <li onclick="window.location.href='/Script'">Upload Scripts</li>
+        <li onclick="window.location.href='/communication'">Communication</li>
+        <li onclick="window.location.href='/profile'">Add User</li>
+        <li onclick="window.location.href='/admin-profile'">Profile</li>
+        <li onclick="window.location.href='/tickets-raised'">TicketsRaised</li>
+
+    </ul>
+</div>
+
+  <!-- Main Content Section -->
+  <div class="content">
+    <div class="card">
+      <h2>Dynamic Voice Q&A System</h2>
+
+      <!-- Upload Form -->
+      <form id="uploadForm" enctype="multipart/form-data">
+        <label for="clientName">Client Name:</label>
+        <select id="clientName" name="clientName" required>
+          <option value="">Select Client Name</option>
+        </select>
+      
+        <label for="fileInput">Upload Excel File:</label>
+        <input type="file" id="fileInput" name="file" accept=".xlsx, .xls" required />
+      
+        <button type="submit">Upload</button>
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+
+document.getElementById("uploadForm").addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const fileInput = document.getElementById("fileInput");
+  const clientName = document.getElementById("clientName").value;
+
+  if (!fileInput.files.length) {
+    alert("Please select a file.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", fileInput.files[0]);
+  formData.append("clientName", clientName);
+
+  try {
+    const response = await fetch("http://localhost:80/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert("File uploaded successfully!");
+    } else {
+      alert("Upload failed: " + result.error);
+    }
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    alert("Error uploading file.");
+  }
+});
+
+
+    
+    // Sidebar button highlight
+    function highlightButton(element) {
+      // Remove active class from all buttons
+      const buttons = document.querySelectorAll('.sidebar ul li');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Add active class to the clicked button
+      element.classList.add('active');
+    }
+
+    // Populate Client Names
+    async function populateClientNames() {
+      try {
+        const response = await fetch("http://localhost:80/api/clients/names");
+        const clientNames = await response.json();
+        const clientDropdown = document.getElementById("clientName");
+        clientDropdown.innerHTML = '<option value="">Select Client Name</option>';
+
+        clientNames.forEach(name => {
+          let option = document.createElement("option");
+          option.value = name;
+          option.textContent = name;
+          clientDropdown.appendChild(option);
+        });
+      } catch (error) {
+        console.error("Error fetching client names:", error);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", populateClientNames);
+
+    function logout() {
+        fetch('/logout')
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/';
+            }
+        });
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Profile</title>
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar aligned to the left */
+.sidebar {
+    width: 220px;
+    background: #2c3e50;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar h2 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #34495e;
+}
+
+.sidebar ul li:hover, .sidebar ul li.active {
+    background: #1a252f;
+}
+
+.logout-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 34px; /* Reduce icon size */
+  color: black;
+  cursor: pointer;
+  padding: 4px; /* Adjust padding */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-btn i {
+  font-size: 18px;
+}
+
+.logout-btn:hover {
+  color: #f44336;
+}
+       
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .client-info, .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #ffffff;
+        }
+        .client-info p, .section ul {
+            font-size: 16px;
+            color: #555;
+        }
+        .section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .section ul li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .section ul li:last-child {
+            border-bottom: none;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+<!-- 
+    <div class="sidebar">
+        <h2>Client Panel</h2>
+        <ul>
+            <li onclick="window.location.href='/client-profile'">Dashboard</li>
+            <li onclick="window.location.href='/payment-methods'">Payment Methods</li>
+            <li onclick="window.location.href='/url'">URLs</li>
+            <li onclick="window.location.href='/client-profile'">Profiles</li>
+            <li onclick="window.location.href='/send-mail'">mail</li>
+
+        </ul>
+    </div> -->
+
+    <div class="container">
+        <h1>Client Dashboard</h1>
+        <div class="client-info" id="clientInfo">
+            <p><strong>Client Name:</strong> <span id="clientName"></span></p>
+            <p><strong>Email:</strong> <span id="clientEmail"></span></p>
+            <p><strong>Subscription:</strong> <span id="subscription"></span></p>
+            <p><strong>End Date:</strong> <span id="endDate"></span></p>
+        </div>
+        
+        <div class="section">
+            <h2>Uploaded Scripts</h2>
+            <ul id="uploadedScripts"></ul>
+        </div>
+        
+        <div class="section">
+            <h2>Raised Issues</h2>
+            <ul id="raisedIssues"></ul>
+        </div>
+        
+        <div class="section">
+            <h2>Resolved Tickets</h2>
+            <ul id="resolvedTickets"></ul>
+        </div>
+    </div>
+    
+    <script>
+                
+                async function fetchClientData() {
+            try {
+                const [clientRes, scriptsRes, ticketsRes] = await Promise.all([
+                    fetch('/api/client-profile'),
+                    fetch('/api/clients/names'),
+                    fetch('/api/tickets-raised')
+                ]);
+                
+                const clientData = await clientRes.json();
+                const scriptsData = await scriptsRes.json();
+                const ticketsData = await ticketsRes.json();
+                
+                if (!clientData.success) {
+                    document.getElementById('clientInfo').innerHTML = '<p>Unauthorized access</p>';
+                    return;
+                }
+                
+                document.getElementById('clientName').textContent = clientData.client.username;
+                document.getElementById('clientEmail').textContent = clientData.client.email;
+                document.getElementById('subscription').textContent = clientData.client.subscription;
+                document.getElementById('endDate').textContent = clientData.client.endDate;
+                
+                // Display uploaded scripts
+                const scriptsList = document.getElementById('uploadedScripts');
+                scriptsData.forEach(script => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="/ask/${script}" target="_blank">${script}</a>`;
+                    scriptsList.appendChild(li);
+                });
+                
+                // Display tickets
+                const ticketsList = document.getElementById('raisedIssues');
+                const resolvedList = document.getElementById('resolvedTickets');
+                ticketsData.tickets.forEach(ticket => {
+                    const li = document.createElement('li');
+                    li.textContent = `Ticket ${ticket.ticketNumber}: ${ticket.issue} - Status: ${ticket.status || 'Pending'}`;
+                    
+                    if (ticket.status === 'Resolved') {
+                        resolvedList.appendChild(li);
+                    } else {
+                        ticketsList.appendChild(li);
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching client data:', error);
+            }
+        }
+        
+        window.onload = fetchClientData;
+
+        function logout() {
+        fetch('/logout')
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/';
+            }
+        });
+    }
+
+    </script>
+</body>
+</html>

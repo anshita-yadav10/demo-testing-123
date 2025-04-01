@@ -1,0 +1,87 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
+  background-image: url('https://img6.thuthuatphanmem.vn/uploads/2022/03/16/background-cong-nghe-ai-40-dep-nhat_094203238.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1099e2;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #1276db;
+}
+
+form {
+  margin-bottom: 20px;
+  color: #1099e2;
+  font-size: medium;
+  font-weight: bold;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+input[type="file"] {
+  margin-bottom: 10px;
+}
+
+pre {
+  background: #eeeeee;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+#scriptLinkContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    justify-content: center;
+    background-size: 100% 100%; /* Ensures the background fills the entire screen */
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  form {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  input[type="file"] {
+    width: 100%;
+  }
+
+  pre {
+    font-size: 14px;
+    padding: 8px;
+  }
+}

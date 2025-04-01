@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .sidebar {
+            width: 200px;
+            background: #333;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #444;
+        }
+        .sidebar ul li:hover, .sidebar ul li.active {
+            background: #555;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            width: 100%;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .card {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logout-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 34px; /* Reduce icon size */
+  color: black;
+  cursor: pointer;
+  padding: 4px; /* Adjust padding */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-btn i {
+  font-size: 18px;
+}
+
+.logout-btn:hover {
+  color: #f44336;
+}
+    </style>
+</head>
+<body>
+
+     <button class="logout-btn" onclick="logout()">
+    <i class="fas fa-sign-out-alt"></i>
+  </button>
+
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li onclick="window.location.href='/admin'">Dashboard</li>
+            <li onclick="window.location.href='/main'">File Upload</li>
+            <li onclick="window.location.href='/client-details'">Client Details</li>
+            <li onclick="window.location.href='/communication'">Payment Details</li>
+            <li onclick="window.location.href='/script'">Upload Scripts</li>
+            <li onclick="window.location.href='/communication'">Communication</li>
+            <li onclick="window.location.href='/profile'">Add User</li>
+            <li onclick="window.location.href='/admin-profile'">Profile</li>
+            <li onclick="window.location.href='/tickets-raised'">Tickets Raised</li>
+
+        </ul>
+    </div>
+    <div class="content" id="content">
+        <div id="dashboard" class="section">
+            <h2>    Dashboard</h2>
+            <div class="cards">
+                <div class="card">File Upload</div>
+                <div class="card">Client Details</div>
+                <div class="card">Payment Details</div>
+                <div class="card">Upload Scripts</div>
+            </div>
+        </div>
+        <div id="fileUpload" class="section" style="display: none;">
+            <h2>File Upload</h2>
+            <input type="file">
+        </div>
+        <div id="clientDetails" class="section" style="display: none;">
+            <h2>Client Details</h2>
+            <p>Client details form here...</p>
+        </div>
+        <div id="paymentDetails" class="section" style="display: none;">
+            <h2>Payment Details</h2>
+            <p>Payment records and transactions...</p>
+        </div>
+        <div id="uploadScripts" class="section" style="display: none;">
+            <h2>Upload Scripts</h2>
+            <p>Script uploading functionality...</p>
+        </div>
+        <div id="communication" class="section" style="display: none;">
+            <h2>Communication</h2>
+            <p>Messages and notifications...</p>
+        </div>
+        <div id="addUser" class="section" style="display: none;">
+            <h2>Add User</h2>
+            <form>
+                <label>Name: <input type="text"></label>
+                <label>Email: <input type="email"></label>
+                <button type="submit">Add User</button>
+            </form>
+        </div>
+        <div id="profile" class="section" style="display: none;">
+            <h2>Profile</h2>
+            <p>Profile details...</p>
+        </div>
+    </div>
+
+    <script>
+        
+
+
+    function logout() {
+        fetch('/logout')
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/';
+            }
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask Me Anything</title>
+  <style>
+     /* body {
+      background: url('https://img6.thuthuatphanmem.vn/uploads/2022/03/16/background-cong-nghe-ai-40-dep-nhat_094203238.jpg') no-repeat center center fixed;
+      background-size: cover;
+    } */
+    #askButton {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+      z-index: 9999;
+      pointer-events: auto;
+    }
+    #askButton:hover { transform: scale(1.1); }
+    #askButton:active { transform: scale(1.3); }
+    #chatBox {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: auto;
+      max-width: 250px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background:none;
+    }
+    .message { font-size: 16px; font-weight: bold; color: black; }
+    
+    #voiceSettings {
+      position: fixed;
+      bottom: 100px;
+      left: 20px;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+    .message {
+      font-size: 16px;
+      font-weight: bold;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  
+  <button id="askButton">
+    <img src="https://www.sapphireinfocom.com/images/robot1.gif" alt="Ask Me Anything" width="100" height="100">
+  </button>
+  <div id="chatBox"></div>
+
+  <!-- Voice Customization Settings -->
+  <div id="voiceSettings">
+    <h3>Voice Settings</h3>
+    <label for="pitch">Pitch:</label>
+    <input type="range" id="pitch" min="0" max="2" step="0.1" value="1"><br>
+
+    <label for="speed">Speed:</label>
+    <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1"><br>
+
+    <label for="accent">Accent:</label>
+    <select id="accent">
+      <option value="en-US">American English</option>
+      <option value="en-GB">British English</option>
+      <option value="en-AU">Australian English</option>
+    </select><br>
+
+    <label for="voice">Voice:</label>
+    <select id="voice"></select><br>
+
+    <button onclick="saveVoiceSettings()">Save Settings</button>
+  </div>
+
+  <script>
+const askButton = document.getElementById("askButton");
+const chatBox = document.getElementById("chatBox");
+const scriptId = window.location.pathname.split("/").pop();
+
+// Default voice settings
+let voiceSettings = {
+  pitch: 1,
+  speed: 0.9,
+  accent: "en-US",
+  voice: "",
+};
+
+// Populate available voices dynamically
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  const voiceSelect = document.getElementById("voice");
+  voiceSelect.innerHTML = ""; // Clear previous options
+
+  voices.forEach((voice) => {
+    const option = document.createElement("option");
+    option.value = voice.name;
+    option.textContent = voice.name;
+    voiceSelect.appendChild(option);
+  });
+
+  // Set default voice
+  if (voices.length > 0 && !voiceSettings.voice) {
+    voiceSettings.voice = voices[0].name;
+  }
+}
+
+// Ensure voices load properly
+window.speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+// Save user-selected voice settings
+function saveVoiceSettings() {
+  voiceSettings.pitch = parseFloat(document.getElementById("pitch").value);
+  voiceSettings.speed = parseFloat(document.getElementById("speed").value);
+  voiceSettings.accent = document.getElementById("accent").value;
+  voiceSettings.voice = document.getElementById("voice").value;
+
+  alert("Voice settings saved!");
+}
+// Adjust speech rate based on response length
+function getAdjustedRate(text) {
+  const wordCount = text.split(" ").length;
+  if (wordCount > 20) return 0.9; // Slow for long responses
+  if (wordCount > 10) return 1.0; // Normal speed for medium responses
+  return 1.2; // Faster for short responses
+}
+// Get appropriate greeting based on time
+function getGreeting() {
+  const hours = new Date().getHours();
+  if (hours >= 5 && hours < 12) return "Good morning!";
+  if (hours >= 12 && hours < 17) return "Good afternoon!";
+  if (hours >= 17 && hours < 21) return "Good evening!";
+  return "Good night!";
+}
+
+// Handle voice interaction
+async function handleSpeechProcess() {
+  console.log("Button clicked!");
+  
+  const greeting = getGreeting();
+  chatBox.style.display = "block";
+  chatBox.innerHTML = `<p class="message">${greeting}</p>`;
+  await speak(greeting);
+
+  chatBox.innerHTML = `<p class="message">How can I help you?</p>`;
+  await speak("How can I help you?");
+
+  while (true) {
+    const userInput = await getSpeechInput();
+    if (!userInput) continue;
+
+    chatBox.innerHTML = `<p class="message user-question">${userInput}</p>`;
+    await wait(1000);
+
+    chatBox.innerHTML = '';
+
+    try {
+      const response = await fetch(`/process-speech/${scriptId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: userInput }),
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch response");
+
+      const data = await response.json();
+      chatBox.innerHTML = `<p class="message">Bot: ${data.answer}</p>`;
+      await speak(data.answer);
+
+    } catch (error) {
+      console.error("Fetch error:", error);
+      chatBox.innerHTML = `<p class="message">Sorry, please ask related questions.</p>`;
+      await speak("Sorry, please ask related questions.");
+    }
+
+    chatBox.innerHTML = `<p class="message">Is there anything else?</p>`;
+    await speak("Is there anything else?");
+
+    const continueResponse = await getSpeechInput();
+    if (continueResponse.toLowerCase().includes("yes")) {
+      chatBox.innerHTML = `<p class="message">How can I help you?</p>`;
+      await speak("How can I help you?");
+    } else {
+      chatBox.innerHTML = `<p class="message">Thank you!</p>`;
+      await speak("Thank you");
+      chatBox.innerHTML = ''; 
+      chatBox.style.display = "none";
+      return;
+    }
+  }
+}
+
+// Speech synthesis with user settings
+function speak(text) {
+  return new Promise((resolve) => {
+    if (!window.speechSynthesis) {
+      console.error("Speech synthesis not supported");
+      resolve();
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.pitch = voiceSettings.pitch;
+    utterance.rate = voiceSettings.speed || 0.9;
+    utterance.lang = voiceSettings.accent;
+
+    function setVoice() {
+      const voices = window.speechSynthesis.getVoices();
+
+      // Prioritize female voices
+      let femaleVoices = voices.filter(voice => voice.name.includes("Female") || voice.name.includes("Woman"));
+      let selectedVoice = femaleVoices.length ? femaleVoices[0] : voices.find(voice => voice.lang === voiceSettings.accent);
+
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+      }
+      window.speechSynthesis.speak(utterance);
+    }
+
+    if (window.speechSynthesis.getVoices().length === 0) {
+      window.speechSynthesis.onvoiceschanged = setVoice;
+    } else {
+      setVoice();
+    }
+
+    utterance.onend = resolve;
+  });
+}
+
+
+// Wait function
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Speech recognition
+function getSpeechInput() {
+  return new Promise((resolve) => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = "en-US";
+
+    recognition.onresult = (event) => {
+      resolve(event.results[0][0].transcript);
+    };
+
+    recognition.onerror = (error) => {
+      console.error("Speech recognition error:", error);
+      resolve("");
+    };
+
+    recognition.start();
+  });
+}
+
+askButton.addEventListener("click", handleSpeechProcess);
+  </script>
+</body>
+</html>
